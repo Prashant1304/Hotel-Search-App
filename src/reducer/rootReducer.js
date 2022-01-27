@@ -7,7 +7,7 @@ let rootReducer = combineReducers({
     ascending:ascendingReducer,
     descending:descendingReducer,
     search:searchReducer,
-    api:apiReducer
+    apiData:apiReducer
 })
 
 export default rootReducer

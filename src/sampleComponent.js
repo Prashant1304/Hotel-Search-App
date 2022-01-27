@@ -2,35 +2,24 @@ import { useDispatch,useSelector } from "react-redux"
 import { connect } from "react-redux";
 import axios from "axios";
 import React from "react";
-import {ascending,descending,search} from "./action"
 import {useEffect,useState} from "react"
 import "./sample.css"
-
-const api = "https://5f3edf2513a9640016a69257.mockapi.io/hotels"
-
+import {taskAction} from "./action/taskAction"
 
 function SampleComponent(props) {
-    const ascendingg = useSelector(state => state.ascending)
-    const descendingg = useSelector(state => state.descending)
-    const searchg = useSelector(state => state.search)
-    const dispatchAscending = useDispatch(ascending())
-    const dispatchDescending = useDispatch(descending())
-    const dispatchSearch = useDispatch(search())
-    console.log(ascending(),descending(),search(),"hii")
+    //here its rendering 4 times
     const [data, setData] = useState([]);
     const [value,setValue] = useState("")
     const [displayData,setDisplayData] = useState("")
-     useEffect(()=> {
-        axios(api).then((response) => {
-            setData(response.data)
-            console.log(response.data,"url")
-        }).catch(()=>{
-            setData({})
-        })
-    },[])
+    console.log(props.data,"Api-Data")
+    useEffect(()=> {
+        //here its rendering 1 times
+        setData(props.data)
+         props.taskAction()
+        console.log(props.data,"propsdata")
+    },[props.data])
    const handleValue=(e) => {
        setValue(e)
-        console.log(e)
         if(value !== " ") {
             let filterData = data.filter(x=>{
                    return Object.values(x).join('').toLowerCase().includes(value.toLowerCase())
@@ -40,8 +29,8 @@ function SampleComponent(props) {
             setDisplayData(data)
         }
     }
-
     const handleAscending = e => {
+        
         let sortAscending = data.sort((a,b) => {
             if(a.name < b.name) {return -1}
             if(a.name > b.name) {return 1}
@@ -60,9 +49,9 @@ function SampleComponent(props) {
         setDisplayData(sortDescending)
         setDisplayData("")
     }
-
     return(
-    <div>
+    <div>        
+        
         <div>
             <div className="HTMLPart">
             <input className="inputSearchBar" onChange={ (e)=>handleValue(e.target.value)} value={value}></input>
@@ -84,11 +73,18 @@ function SampleComponent(props) {
                     </div>
                 })
             )}
-            {console.log(data)}
             </div>
         </div>
     </div>
     )
 }
-
-export default SampleComponent
+const mapStateToProps = state => ({
+    data: state.apiData.data,
+    loading: state.apiData.loading,
+    error: state.apiData.error,
+ });
+ 
+ const mapDispatchToProps = {
+    taskAction
+ };
+export default connect(mapStateToProps,mapDispatchToProps)(SampleComponent)

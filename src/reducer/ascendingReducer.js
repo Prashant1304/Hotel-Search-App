@@ -1,3 +1,4 @@
+//not used
 const initialState = {
     data1:1
 }
