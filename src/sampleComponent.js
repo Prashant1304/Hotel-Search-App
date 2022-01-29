@@ -1,6 +1,4 @@
-import { useDispatch,useSelector } from "react-redux"
 import { connect } from "react-redux";
-import axios from "axios";
 import React from "react";
 import {useEffect,useState} from "react"
 import "./sample.css"
@@ -11,13 +9,19 @@ function SampleComponent(props) {
     const [data, setData] = useState([]);
     const [value,setValue] = useState("")
     const [displayData,setDisplayData] = useState("")
-    console.log(props.data,"Api-Data")
+    // console.log(props.data,"Api-Data")
+    useEffect(() => {
+        props.taskAction()
+    },[])
+
     useEffect(()=> {
+
         //here its rendering 1 times
         setData(props.data)
-         props.taskAction()
+
         console.log(props.data,"propsdata")
     },[props.data])
+    
    const handleValue=(e) => {
        setValue(e)
         if(value !== " ") {
