@@ -49,7 +49,7 @@ test("Testing Descending ", () =>  {
   
 })
 
-  test('should execute fetch data', () => {
+  test('should execute loding data', () => {
     const store = mockStore({})
     //   console.log(store.dispatch(taskAction()),"store")
     store.dispatch(taskAction())
@@ -58,3 +58,9 @@ test("Testing Descending ", () =>  {
     expect(actions[0].type).toEqual("REDUX_THUNK_LOAD_USERS_LOADING")
 })
 
+test ("should get success data", () => {
+    const store = mockStore({})
+    const action ={ type: 'REDUX_THUNK_LOAD_USERS_SUCCESS' }
+    store.dispatch(taskAction())
+    expect(action.type).toEqual("REDUX_THUNK_LOAD_USERS_SUCCESS")
+})
