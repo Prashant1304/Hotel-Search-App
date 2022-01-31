@@ -9,11 +9,13 @@ function SampleComponent(props) {
     const [data, setData] = useState([]);
     const [value,setValue] = useState("")
     const [displayData,setDisplayData] = useState("")
+    const [notToDisplay,setNotToDisplay] =useState(false)
     // console.log(props.data,"Api-Data")
     useEffect(() => {
         props.taskAction()
     },[])
-
+    
+    
     useEffect(()=> {
 
         //here its rendering 1 times
@@ -21,7 +23,6 @@ function SampleComponent(props) {
 
         console.log(props.data,"propsdata")
     },[props.data])
-    
    const handleValue=(e) => {
        setValue(e)
         if(value !== " ") {
@@ -34,7 +35,6 @@ function SampleComponent(props) {
         }
     }
     const handleAscending = e => {
-        
         let sortAscending = data.sort((a,b) => {
             if(a.name < b.name) {return -1}
             if(a.name > b.name) {return 1}
@@ -53,20 +53,25 @@ function SampleComponent(props) {
         setDisplayData(sortDescending)
         setDisplayData("")
     }
+    const handleNotToDisplay = () => {
+        setNotToDisplay(true)
+    }
+    // console.log(data,"dataaaaa")
     return(
     <div>        
-        
+        <h1 data-testid="hotelApp" onClick={handleNotToDisplay}>Hotel App</h1>
+        {/* <h1 data-testid="sucess" >{data[0].}</h1> */}
         <div>
             <div className="HTMLPart">
-            <input className="inputSearchBar" onChange={ (e)=>handleValue(e.target.value)} value={value}></input>
-            <button onClick={handleAscending}>Ascending</button>
-            <button onClick={handleDescending}>Descending</button>
+            <input data-testid="displayPart" className="inputSearchBar" onChange={ (e)=>handleValue(e.target.value)} value={value}></input>
+            <button data-testid = "AscendingButton" onClick={handleAscending}>Ascending</button>
+            <button data-testid = "DescendingButton" onClick={handleDescending}>Descending</button>
             </div>
-            <div className="displayData">
+            <div  className="displayData">
             {   value.length > 1 ? (    
             displayData.map((x,y) => {
-              return  <div key ={y} className="displayInsideData">
-                   <p> {x.name}</p>
+              return  <div  key ={y} className="displayInsideData">
+                   <p > {x.name}</p>
                    <img className="imageSize" src={x.image}></img>
                 </div>
             })):(
