@@ -3,6 +3,7 @@ import ascendingReducer from "./ascendingReducer"
 import descendingReducer from "./descendingReducer"
 import searchReducer from "./searchReducer"
 import apiReducer from "./apiReducer"
+
 let rootReducer = combineReducers({
     ascending:ascendingReducer,
     descending:descendingReducer,
