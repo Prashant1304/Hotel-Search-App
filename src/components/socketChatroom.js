@@ -4,18 +4,16 @@ function ChatRoom(props) {
     const roomId = window.location.pathname
     const { messages, sendMessage } = useChat(roomId);
     const [newMessage,SetNewMessage] = useState("")
-console.log(props,"props",messages,)
-
     const handleNewMessage = (e) => {
         SetNewMessage(e.target.value)
     }
-
+    
     const handleMessage = () => {
         sendMessage(newMessage)//
         SetNewMessage("")
     }
-
     
+    console.log(props,"props",messages,)
     return(
         <div>
             <div>
@@ -37,5 +35,6 @@ console.log(props,"props",messages,)
         </div>
     )
 }
+
 
 export default ChatRoom
